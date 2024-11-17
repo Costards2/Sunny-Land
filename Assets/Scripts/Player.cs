@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public class Player : MonoBehaviour
@@ -22,6 +23,9 @@ public class Player : MonoBehaviour
 
     bool isGrounded = false;
     bool jumpInput = false;
+    bool gameWon = false;
+
+    int acornGathered;
 
     void Awake()
     {
@@ -150,6 +154,17 @@ public class Player : MonoBehaviour
         else if (collision.CompareTag("Fall"))
         {
             transform.position = initialPosition;
+        }
+        else if (collision.CompareTag("Acorn"))
+        {
+            acornGathered++;
+
+            if(acornGathered == 5)
+            {
+                gameWon = true;
+
+                SceneManager.LoadScene("EndGame");
+            }
         }
     }
 }

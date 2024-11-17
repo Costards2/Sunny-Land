@@ -11,7 +11,8 @@ public class Opossum : MonoBehaviour
     private float right;
     private float left;
     private SpriteRenderer sprite;
-    private Collider2D collider2D;
+    private Collider2D collider2D; 
+    private AudioSource audioSource;    
 
     private enum EnemyState
     {
@@ -26,6 +27,7 @@ public class Opossum : MonoBehaviour
     {
         collider2D = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         right = pointRight.position.x;
         left = pointLeft.position.x;
         currentState = EnemyState.WalkingRight;
@@ -82,6 +84,7 @@ public class Opossum : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             currentState = EnemyState.Dead;
+            audioSource.Play();
             collider2D.enabled = false;
             Destroy(gameObject, 3f);
         }
